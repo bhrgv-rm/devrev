@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body{
+      background-color: #E7E7E7;
+      font-family: "Lora";
+    }
+    #date,#time{
+      margin: 2px 0;
+      font-size: 16px;
+      text-align: center;
+    }
+    input{
+      width: 200px;
+    }
+    #formdiv{
+      /* height: 100vh; */
+      font-family: "Lora";
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    *:focus{
+      outline: none;
+      box-shadow:
+      0 0 0 3px #E7E7E7, 
+      0 0 0 6px black;
+    }
+    #title{
+      border-radius: 3px;
+      margin-bottom: 10px;
+      text-align: center;
+      border:2px solid black;
+      padding: 3px 5px;
+    }
+    #title:hover{
+      background-color: #afafaf;
+    }
+    #writer{
+      font-family: '"Cascadia Code", monospace';
+      font-size: 13px;
+    }
+    #outputs{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 50%;
+    }
+    #numfound{
+      margin-top: 5px;
+      font-size:20px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    #accept{
+      padding: 2px 5px ;
+      border: 2px solid black;
+      border-radius: 2px;
+      /* width: 100px; */
+
+    }
+  </style>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vaccination Booking</title>
+</head>
+<body>
+  <div id="formdiv">
+    <h1 class="text-6xl">COVID - 19 Vaccination Booking</h1>
+    <div class="inputs">
+      <input type="date" class="px-5 py-3 rounded-md border-black border-2" placeholder="Name of the Book / Author" id="input_date" autocomplete="off">
+      <button class="border-black border-2 px-5 py-3 ml-4 rounded" onclick="results()">&rarr;</button>
+    </div>
+    <div id="outputs"></div>
+    <div id="done">
+      <p id="success"></p>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script>
+    function results(){
+      const get_date = document.getElementById("input_date").value
+      console.log(get_date)
+      if(get_date.length === 10){
+      const time_min = 9
+      const time_max = 20
+      var times = (Math.floor(Math.random() * (time_max - time_min + 1) ) + time_min)
+      const timep1 = times+1
+      
+      const date = document.createElement("p")
+      date.setAttribute('id','date')
+      date.innerHTML = "Chosen date for vaccination is &rarr;&nbsp;" + get_date
+      document.getElementById('outputs').appendChild(date)
+      
+      const time = document.createElement("p")
+      time.setAttribute('id','time')
+      time.innerHTML = "Alloted time - slot is from " + times + ":00 to " + timep1 +":00"
+      document.getElementById('outputs').appendChild(time)
+      
+      const button = document.createElement("button")
+      button.setAttribute('id','accept')
+      button.innerHTML = "Confirm Time Slot"
+      document.getElementById('outputs').appendChild(button)
+      }
+    }
+  </script>
+</body>
+</html>

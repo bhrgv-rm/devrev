@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .formdiv{
+      height: 100vh;
+    }
+    form{
+      margin-bottom: 20px;
+    }
+    span{
+      font-family: monospace;
+    }
+    .formdiv,form{
+      font-family: "Lora";
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  *:focus{
+    outline: none;
+    box-shadow:
+    0 0 0 2px #E7E7E7, 
+    0 0 0 4px black;
+  }
+  </style>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <div class="formdiv">
+    <h1 class="text-6xl">Login</h1>
+    
+    <p class="text-center mb-4">Admin ID &rarr; <span>admin12</span></p>
+    <p class="text-center mb-4">Password &rarr; <span>pass12</span></p>
+      <input class="mb-2 border-2 border-black px-5 py-3 rounded" id="email" type="email" placeholder="Email - ID" autocomplete="off">
+      <input class="mb-2 border-2 border-black px-5 py-3 rounded" id="pwd" type="password" placeholder="Password" autocomplete="off">
+      <button  class="border-2 border-black px-5 py-3 rounded" onclick="checker()" >Login</button>
+    <div class="mt-5">
+      
+      <a class="mb-2 px-5 py-3 rounded-md border-black border-2"   href="./signup.html" id="signup">Don't Have an Account?</a>
+    </div>
+  </div>
+
+  <script>
+    function checker(){
+      var user = document.getElementById("email").value
+      var pass = document.getElementById("pwd").value
+      console.log(user)
+      console.log(pass)
+      if(user==="admin12" && pass === "pass12"){
+        window.alert("Login Success")
+        location.href = "main.html"
+      }else{
+        window.alert("Login Failed")
+      }
+    }
+  </script>
+</body>
+</html>
