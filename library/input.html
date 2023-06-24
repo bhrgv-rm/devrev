@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body{
+      background-color: #E7E7E7;
+      font-family: "Lora";
+    }
+    input{
+      width: 1000px;
+    }
+    #formdiv{
+      /* height: 100vh; */
+      font-family: "Lora";
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    *:focus{
+      outline: none;
+      box-shadow:
+      0 0 0 3px #E7E7E7, 
+      0 0 0 6px black;
+    }
+    #title{
+      border-radius: 3px;
+      margin-bottom: 10px;
+      text-align: center;
+      border:2px solid black;
+      padding: 3px 5px;
+    }
+    #title:hover{
+      background-color: #afafaf;
+    }
+    #writer{
+      font-family: monospace;
+      font-size: 13px;
+    }
+    #outputs{
+      width: 50%;
+    }
+    #numfound{
+      /* <p id="numfound" class="mt-5 text-2xl text-center mb-4" ></p> */
+      margin-top: 5px;
+      font-size:20px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+  </style>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Data Finder </title>
+</head>
+<body>
+  <div id="formdiv">
+    <h1 class="text-6xl">Welcome to the Online Library</h1>
+    <p class="mb-2 text-xl">Data Acquisition from <span class="font-mono">Open Library API</span></p>
+    <div class="inputs">
+      <input type="text"  class="px-5 py-3 rounded-md border-black border-2" placeholder="Name of the Book / Author" id="input_val" autocomplete="off">
+      <button class="border-black border-2 px-5 py-3 ml-4 rounded" onclick="results()">&rarr;</button>
+    </div>
+    <p id="rem" class="mt-4 text-center">The outputs might take a few seconds to show up.</p>
+    <div id="outputs"></div>
+  </div>
+
+
+
+
+
+
+  <script>
+    let api_json
+    let button_toggle = 0
+    function results(){
+
+      button_toggle++
+
+      if(button_toggle === 1){
+      const value = document.getElementById("input_val").value
+      console.log(value)
+      
+
+      const api_call = async() => {
+        var url = new URL ("https://openlibrary.org/search.json?q=")
+        url.searchParams.set('q',value)
+        console.log(url)
+
+        const api = await fetch(url)
+        api_json = await api.json()
+        console.log(api_json)
+        
+        // const removal = document.getElementById("rem")
+        // removal.remove()
+
+        // const nums = document.getElementById("numfound")
+        const numfound = document.createElement("p")
+        numfound.setAttribute('id','numfound')
+        numfound.innerHTML = "  HERE IS THE OPTIMISED LIST OF " + api_json.numFound + " TITLES FROM THE DATABASE"
+        document.getElementById('outputs').appendChild(numfound)
+
+        
+
+        for(let i = 0; i < 100;i++){
+          const creator = document.createElement("p")
+          const writer = document.createElement("span")
+          creator.setAttribute('id','title')
+          writer.setAttribute('id','writer')
+          creator.innerHTML = api_json.docs[i].title + ","
+          writer.innerHTML = "&nbsp;" + api_json.docs[i].author_name
+          creator.appendChild(writer)
+          document.getElementById('outputs').appendChild(creator)
+        }
+      }
+      api_call()
+    }else{
+      console.log("Data Recall")
+      const deleter = document.getElementById('outputs')
+      deleter.remove()
+
+      const value = document.getElementById("input_val").value
+      console.log(value)
+      
+
+      const api_call = async() => {
+        var url = new URL ("https://openlibrary.org/search.json?q=")
+        url.searchParams.set('q',value)
+        console.log(url)
+
+        const api = await fetch(url)
+        api_json = await api.json()
+        console.log(api_json)
+        
+        // const removal = document.getElementById("rem")
+        // removal.remove()
+
+        const outdiv = document.createElement("div")
+        outdiv.setAttribute('id','outputs')
+        document.getElementById('formdiv').appendChild(outdiv)
+        
+        // const nums = document.getElementById("numfound")
+
+        const numfound = document.createElement("p")
+        numfound.setAttribute('id','numfound')
+        numfound.innerHTML = "  HERE IS THE OPTIMISED LIST OF " + api_json.numFound + " TITLES FROM THE DATABASE"
+        console.log(numfound)
+        document.getElementById('outputs').appendChild(numfound)
+
+        
+
+        for(let i = 0; i < 100;i++){
+          const creator = document.createElement("p")
+          const writer = document.createElement("span")
+          creator.setAttribute('id','title')
+          writer.setAttribute('id','writer')
+          creator.innerHTML = api_json.docs[i].title + ","
+          writer.innerHTML = "&nbsp;" + api_json.docs[i].author_name
+          creator.appendChild(writer)
+          document.getElementById('outputs').appendChild(creator)
+        }
+      }
+      api_call()
+    }
+    }
+  </script>
+</body>
+</html>
